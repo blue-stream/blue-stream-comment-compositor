@@ -18,7 +18,7 @@ export class CommentsController {
     }
 
     private static async expandCommentsInformation(comments: any) {
-        let expandedComments;
+        let expandedComments = comments;
         const usersIds = comments.map((comment: any) => comment.user);
         const reactionsResources = comments.map((comment: any) => comment.id);
 
