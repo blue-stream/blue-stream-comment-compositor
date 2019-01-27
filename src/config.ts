@@ -34,7 +34,7 @@ export const config = {
         },
     },
     server: {
-        port: +(process.env.SERVER_PORT || 3000),
+        port: +(process.env.SERVER_PORT || 7002),
         hostname: process.env.SERVER_HOST || 'http://localhost',
         name: process.env.SERVER_NAME || 'Compositor',
     },
@@ -47,6 +47,9 @@ export const config = {
         password: process.env.RMQ_LOGGER_PASS || 'guest',
         username: process.env.RMQ_LOGGER_USER || 'guest',
         persistent: false,
+    },
+    cors: {
+        allowedOrigins: process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : ['http://localhost'],
     },
     authentication: {
         required: process.env.AUTHENTICATION_REQUIRED || true,
