@@ -30,13 +30,17 @@ export class CommentsController {
         const reactionsMap: { [resource: string]: Object } = {};
         const reactedResourcesMap: { [resource: string]: string } = {};
 
-        reactions.forEach((reaction: any) => {
-            reactionsMap[reaction.resource] = reaction.types || undefined;
-        });
+        if (reactions) {
+            reactions.forEach((reaction: any) => {
+                reactionsMap[reaction.resource] = reaction.types || undefined;
+            });
+        }
 
-        reactedResources.forEach((reaction: any) => {
-            reactedResourcesMap[reaction.resource] = reaction.type;
-        });
+        if (reactedResources) {
+            reactedResources.forEach((reaction: any) => {
+                reactedResourcesMap[reaction.resource] = reaction.type;
+            });
+        }
 
         return comments.map((comment: any) => {
             return {
