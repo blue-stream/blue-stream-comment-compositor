@@ -18,9 +18,10 @@ export const config = {
         },
         reactions: {
             rpc: {
-                port: +(process.env.REACTIONS_RPC_PORT || 6004),
+                port: +(process.env.REACTIONS_RPC_PORT || 6001),
                 methods: {
                     GET_REACTIONS_BY_RESOURCES: 'getReactionsByResources',
+                    GET_USER_REACTIONS_BY_RESOURCES: 'getUserReactedResources',
                 },
             },
             port: +(process.env.REACTIONS_PORT || 5004),
