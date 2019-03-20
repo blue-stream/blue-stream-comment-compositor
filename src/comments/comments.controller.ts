@@ -3,6 +3,7 @@ import { ReactionsRpc } from '../reactions/reactions.rpc';
 import { UsersRpc } from '../users/users.rpc';
 import { VideosService } from '../videos/videos.service';
 import { CommentsService } from './comments.service';
+import { log } from '../utils/logger';
 
 export class CommentsController {
     static async getRootComments(req: Request, res: Response) {
@@ -20,9 +21,18 @@ export class CommentsController {
         const reactionsResources = comments.map((comment: any) => comment.id);
 
         const results = await Promise.all([
-            UsersRpc.getUsersByIds(usersIds).catch(e => undefined),
-            ReactionsRpc.getReactionsByResources(reactionsResources).catch(e => undefined),
-            ReactionsRpc.getUserReactedResources(reactionsResources, user).catch(e => undefined),
+            UsersRpc.getUsersByIds(usersIds).catch((error) => {
+                log('warn' , 'Users RPC request failed - getUsersByIds', error.message, '', user, { error });
+                return undefined;
+            }),
+            ReactionsRpc.getReactionsByResources(reactionsResources).catch((error) => {
+                log('warn' , 'Reaction RPC request failed - getReactionsByResources', error.message, '', user, { error });
+                return undefined;
+            }),
+            ReactionsRpc.getUserReactedResources(reactionsResources, user).catch((error) => {
+                log('warn' , 'Reaction RPC request failed - getUserReactedResources', error.message, '', user, { error });
+                return undefined;
+            }),
         ]);
 
         const [users, reactions, reactedResources] = results;
