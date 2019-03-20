@@ -22,15 +22,15 @@ export class CommentsController {
 
         const results = await Promise.all([
             UsersRpc.getUsersByIds(usersIds).catch((error) => {
-                log('warn' , 'Users RPC request failed - getUsersByIds', error.message, '', user, [error]);
+                log('warn' , 'Users RPC request failed - getUsersByIds', error.message, '', user, { error });
                 return undefined;
             }),
             ReactionsRpc.getReactionsByResources(reactionsResources).catch((error) => {
-                log('warn' , 'Reaction RPC request failed - getReactionsByResources', error.message, '', user, [error]);
+                log('warn' , 'Reaction RPC request failed - getReactionsByResources', error.message, '', user, { error });
                 return undefined;
             }),
             ReactionsRpc.getUserReactedResources(reactionsResources, user).catch((error) => {
-                log('warn' , 'Reaction RPC request failed - getUserReactedResources', error.message, '', user, [error]);
+                log('warn' , 'Reaction RPC request failed - getUserReactedResources', error.message, '', user, { error });
                 return undefined;
             }),
         ]);
