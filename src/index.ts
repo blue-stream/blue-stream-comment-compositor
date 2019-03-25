@@ -1,7 +1,17 @@
+import { config } from './config';
+const apm = require('elastic-apm-node');
+
+if (config.apm.isActive) {
+    apm.start({
+        serviceName: config.server.name,
+        serverUrl: config.apm.server,
+        captureBody: 'all',
+    });
+}
+
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import { log } from './utils/logger';
-import { config } from './config';
 import { AppRouter } from './router';
 import { AppProxyRouter } from './proxyRouter';
 import { Authenticator } from './utils/authenticator';
@@ -42,7 +52,7 @@ server.use(AppProxyRouter);
 server.use(errorHandler);
 server.use(unknownErrorHandler);
 
-log('verbose' , 'Compositor Started', `Port: ${config.server.port}`);
+log('verbose', 'Compositor Started', `Port: ${config.server.port}`);
 console.log(`${config.server.name} running on port ${config.server.port}`);
 
 server.listen(config.server.port);
